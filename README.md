@@ -26,3 +26,5 @@ How to make:
 		docker run --name wp-mysql -e MYSQL_ROOT_HOST=% -e MYSQL_ALLOW_EMPTY_PASSWORD=1 -d mysql/mysql-server
 		docker build -t wp .
 		docker run -p 8080:6080 --env-file env.txt -it --link wp-mysql:mysql wp
+
+3. Using these commands, you should now be able to log in to http://localhost:8080/wp-admin/

@@ -1,6 +1,6 @@
 # Fast 'n ugly Dataporten + Wordpress deploy
 
-This is a proof of concept.  Do not use it to store *ANY* data you'd like to hold on.
+This is a proof of concept.  Do not use it to store *ANY* data you'd like to hold on.  
 This **WILL** shave your cat and then eat it.
 
 Ingredients:

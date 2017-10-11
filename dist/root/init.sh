@@ -8,7 +8,16 @@ echo 'SHOW DATABASES;' | mysql -h"$DBHOST" -u"$DBUSER" --password="$DBPASS" | gr
 	echo "CREATE DATABASE \`$DBNAME\`;" | mysql -h"$DBHOST" -u"$DBUSER" --password="$DBPASS"
 }
 
-wp config create --dbhost="$DBHOST" --dbname="$DBNAME" --dbuser="$DBUSER" --dbpass="$DBPASS"
+
+if test -n "$BEHIND_HTTPS_PROXY" -a "$BEHIND_HTTPS_PROXY" != '0' -a "$BEHIND_HTTPS_PROXY" != 'false'
+then
+	extraphp="\$_SERVER['HTTPS'] = 'on';"
+else
+	extraphp="if (isset(\$_SERVER['HTTP_X_FORWARDED_PROTO']) 
+	&& \$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+	\$_SERVER['HTTPS'] = 'on';
+}";fi
+echo "$extraphp" | wp config create --dbhost="$DBHOST" --dbname="$DBNAME" --dbuser="$DBUSER" --dbpass="$DBPASS" --extra-php
 wp core install --url="$BASEURL" --title='WordPress with Dataporten authentication' --admin_user=admin --admin_email=noreply@uninett.no --skip-email
 
 wp core update-db
